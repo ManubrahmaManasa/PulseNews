@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/iv_article"
         android:layout_width="60dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_launcher_foreground"
         android:layout_height="match_parent"
         android:contentDescription="Article Image"/>
 
@@ -48,11 +48,11 @@
             tools:text = "Description"/>
         
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_publishedAt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text = "Content"/>
+            tools:text = "PublishedAt"/>
 
     </LinearLayout>
 

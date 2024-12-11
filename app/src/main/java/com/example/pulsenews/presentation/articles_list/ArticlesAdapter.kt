@@ -26,7 +26,9 @@ class ArticlesAdapter(private val articles: List<Article>):RecyclerView.Adapter<
             binding.tvAuthor.text = article.author
             binding.tvDescription.text = article.description
             binding.tvPublishedAt.text = article.publishedAt
-            binding.ivArticle.loadImage(article.urlToImage)
+            article.urlToImage?.let {
+                binding.ivArticle.loadImage(it)
+            }
         }
     }
 }

@@ -3,6 +3,8 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -19,7 +21,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 
     buildTypes {
 
@@ -63,4 +68,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.gson)
     implementation(libs.retrofit)
+    implementation(libs.gson.converter)
+
+    implementation(libs.hilt.android.v2511)
+    kapt(libs.hilt.android.compiler)
 }

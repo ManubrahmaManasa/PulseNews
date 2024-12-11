@@ -3,7 +3,7 @@ package com.example.pulsenews.data.model
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
-import com.example.pulsenews.domain.model.Article
+import com.example.pulsenews.domain.model.Article as DomainArticle
 
 data class Article(
     @SerializedName("articles")
@@ -47,7 +47,7 @@ fun Article.toDomainArticles():List<DomainArticle>{
             title = article.title,
             description = article.description,
             urlToImage = article.urlToImage,
-            publishedDate = article.publishedAt,
+            publishedAt = article.publishedAt,
             author = article.author
         )
     }

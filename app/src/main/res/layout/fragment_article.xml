@@ -7,24 +7,11 @@
     android:paddingHorizontal="16dp"
     tools:context=".presentation.articles_list.ArticleFragment">
 
-    <!--<androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_articles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/article_item_view"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>-->
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hellooooooo"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:id="@+id/clickBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click"
-        android:layout_gravity="center"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </FrameLayout>

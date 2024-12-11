@@ -8,6 +8,6 @@ import com.example.pulsenews.domain.utils.NewsResult
 
 class ArticlesRepositoryImpl(private val newsService: NewsService):ArticlesRepository {
     override suspend fun getArticles(): NewsResult<List<Article>, DataError.Network> {
-
+        return NewsResult.Success(emptyList())
     }
 }

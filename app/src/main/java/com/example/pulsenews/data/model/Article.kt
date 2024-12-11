@@ -32,7 +32,6 @@ data class Article(
         @SerializedName("urlToImage")
         val urlToImage: String
     ) {
-        @Keep
         data class Source(
             @SerializedName("id")
             val id: String,

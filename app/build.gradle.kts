@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,7 +22,15 @@ android {
     buildFeatures { viewBinding = true }
 
     buildTypes {
+
+        val apiKey: String = gradleLocalProperties(rootDir,providers).getProperty("API_KEY")
+
+        debug {
+            buildConfigField("String","API_KEY",apiKey)
+        }
+
         release {
+            buildConfigField("String","API_KEY",apiKey)
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

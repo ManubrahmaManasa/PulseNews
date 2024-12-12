@@ -1,6 +1,5 @@
-HeadLines UI Version 1 Added : 
-- Article fragment's -> itemview UI ,frag UI
-- MainActivity UI
-- navGraph,Bottom navigation,drawables
+HeadLined UI Version 2 :
 
-![image](https://github.com/user-attachments/assets/c73ac180-f2f1-46a6-beb7-55cf5355b49a)
+<img src="https://github.com/user-attachments/assets/64392ed1-81e5-4ee3-9aa3-387585d5cda5" width="200">
+
+

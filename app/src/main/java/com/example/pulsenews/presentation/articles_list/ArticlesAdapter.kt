@@ -7,7 +7,10 @@ import com.example.pulsenews.domain.model.Article
 import com.example.pulsenews.databinding.ArticleItemViewBinding
 import com.example.pulsenews.presentation.extensions.loadImage
 
-class ArticlesAdapter(private val articles: List<Article>):RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
+class ArticlesAdapter(
+    private val articles: List<Article>,
+    private val onArticleClicked: (String) -> Unit
+):RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ArticleViewHolder {
         val binding = ArticleItemViewBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -20,7 +23,7 @@ class ArticlesAdapter(private val articles: List<Article>):RecyclerView.Adapter<
 
     override fun getItemCount(): Int = articles.size
 
-    class ArticleViewHolder(private val binding: ArticleItemViewBinding) :RecyclerView.ViewHolder(binding.root) {
+    inner class ArticleViewHolder(private val binding: ArticleItemViewBinding) :RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article){
             binding.tvTitle.text = article.title
             binding.tvAuthor.text = article.author
@@ -28,6 +31,9 @@ class ArticlesAdapter(private val articles: List<Article>):RecyclerView.Adapter<
             binding.tvPublishedAt.text = article.publishedAt
             article.urlToImage?.let {
                 binding.ivArticle.loadImage(it)
+            }
+            binding.root.setOnClickListener {
+                onArticleClicked(article.url)
             }
         }
     }

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Headlines"
+    <item
+        android:id="@+id/nav_headlines"
+        android:title="@string/headlines"
         android:icon="@drawable/ic_globe"/>
-    <item android:title="Favourites"
-        android:icon="@drawable/ic_favourite"/>
-    <item android:title="Search"
+    <item android:title="@string/favourites"
+        android:icon="@drawable/ic_favourite_filled"/>
+    <item
+        android:id="@+id/nav_search"
+        android:title="@string/search"
         android:icon="@drawable/ic_search"/>
 
 </menu>

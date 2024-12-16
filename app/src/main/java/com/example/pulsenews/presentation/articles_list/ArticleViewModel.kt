@@ -20,8 +20,18 @@ class ArticleViewModel @Inject constructor(private val repository: ArticlesRepos
     private val _articles = MutableStateFlow<List<Article>>(emptyList())
     val articles: StateFlow<List<Article>> = _articles
 
-    init {
-        getArticlesList()
+    fun getSearchedArticleList(code:String){
+        viewModelScope.launch {
+            when(val result = repository.getSearchHeadlines(code)){
+                is NewsResult.Success -> {
+                    Log.wtf("ArticleViewModel","getSearchedArticlesList: ${result.data}")
+                    _articles.update { result.data }
+                }
+                is NewsResult.Error -> {
+                    Log.wtf("ArticleViewModel","getSearchedArticleList:Network error")
+                }
+            }
+        }
     }
 
     fun getArticlesList(){

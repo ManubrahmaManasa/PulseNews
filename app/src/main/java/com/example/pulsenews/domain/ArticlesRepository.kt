@@ -6,4 +6,5 @@ import com.example.pulsenews.domain.utils.NewsResult
 
 interface ArticlesRepository {
     suspend fun getArticles(): NewsResult<List<Article>,DataError.Network>
+    suspend fun getSearchHeadlines(searchCode:String):NewsResult<List<Article>,DataError.Network>
 }

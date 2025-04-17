@@ -1,15 +1,19 @@
 package com.example.pulsenews.presentation.articles_list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pulsenews.domain.model.Article
+import com.example.pulsenews.R
+import com.example.pulsenews.domain.models.Article
 import com.example.pulsenews.databinding.ArticleItemViewBinding
 import com.example.pulsenews.presentation.extensions.loadImage
 
 class ArticlesAdapter(
     private val articles: List<Article>,
-    private val onArticleClicked: (String) -> Unit
+    private val onArticleClicked: (String) -> Unit,
+    private val onArticleLongClicked: ((Article,Int)-> Unit)? = null
 ):RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ArticleViewHolder {
@@ -35,6 +39,32 @@ class ArticlesAdapter(
             binding.root.setOnClickListener {
                 onArticleClicked(article.url)
             }
+
+            binding.root.setOnLongClickListener { view ->
+                showPopUp(view,article)
+                true
+            }
         }
+    }
+
+    private  fun showPopUp(view: View?, article: Article) {
+        val popup = PopupMenu(view?.context, view)
+        popup.inflate(R.menu.article_popup_menu)
+        popup.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.add_to_favourites -> {
+                    onArticleLongClicked?.let { it1 -> it1(article,R.id.add_to_favourites) }
+                    true
+                }
+
+                R.id.remove_from_favourites -> {
+                    onArticleLongClicked?.let { it1 -> it1(article, R.id.remove_from_favourites) }
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popup.show()
     }
 }

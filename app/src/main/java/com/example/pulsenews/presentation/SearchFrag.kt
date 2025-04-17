@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
 class SearchFrag : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private val viewModel: ArticleViewModel by viewModels()
+    private val viewModel: ArticleViewModel by activityViewModels()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -85,7 +86,8 @@ class SearchFrag : Fragment() {
                             val intent = Intent(requireContext(),ArticleDetailActivity::class.java)
                             intent.putExtra(ArticleDetailActivity.URL_KEY,url)
                             startActivity(intent)
-                        })
+                        },
+                        onArticleLongClicked = null)
                     binding.rvSearchArticles.adapter = adapter
 
                 }

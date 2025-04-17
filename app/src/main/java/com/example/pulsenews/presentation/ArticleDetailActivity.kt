@@ -6,15 +6,23 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.pulsenews.R
 import com.example.pulsenews.databinding.ActivityArticleDetailBinding
+import com.example.pulsenews.domain.models.Article
+import com.example.pulsenews.presentation.articles_list.ArticleViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ArticleDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticleDetailBinding
+    private val viewModel: ArticleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +53,19 @@ class ArticleDetailActivity : AppCompatActivity() {
             loadUrl(url)
         }
 
-        var isFav = false
+        /*var isFav = false
         binding.fabFav.apply {
             setOnClickListener {
                 isFav = !isFav
-                if(isFav) setImageResource(R.drawable.ic_favourite_filled) else setImageResource(R.drawable.ic_favorite_border)
+                if(isFav) {
+                    setImageResource(R.drawable.ic_favourite_filled)
+                    viewModel.addArticle(Article("Manu","How are you","","today","Dev","https://www.google.com/"))
+                } else {
+                    setImageResource(R.drawable.ic_favorite_border)
+                    //viewModel.removeArticle()
+                }
             }
-        }
+        }*/
     }
 
     companion object {

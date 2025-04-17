@@ -1,9 +1,9 @@
-package com.example.pulsenews.data.model
+package com.example.pulsenews.data.remote
 
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
-import com.example.pulsenews.domain.model.Article
+import com.example.pulsenews.domain.models.Article
 
 data class ArticleDTO(
     @SerializedName("articles")
@@ -42,6 +42,19 @@ data class ArticleDTO(
 }
 
 fun ArticleDTO.toDomainArticles():List<Article>{
+    return articles.map { article ->
+        Article(
+            title = article.title,
+            description = article.description,
+            urlToImage = article.urlToImage,
+            publishedAt = article.publishedAt,
+            author = article.author,
+            url = article.url
+        )
+    }
+}
+
+fun ArticleDTO.toDataArticles():List<Article>{
     return articles.map { article ->
         Article(
             title = article.title,

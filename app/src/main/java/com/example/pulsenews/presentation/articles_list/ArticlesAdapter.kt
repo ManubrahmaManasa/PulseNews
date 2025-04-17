@@ -11,7 +11,7 @@ import com.example.pulsenews.databinding.ArticleItemViewBinding
 import com.example.pulsenews.presentation.extensions.loadImage
 
 class ArticlesAdapter(
-    private val articles: List<Article>,
+    private var articles: List<Article>,
     private val onArticleClicked: (String) -> Unit,
     private val onArticleLongClicked: ((Article,Int)-> Unit)? = null
 ):RecyclerView.Adapter<ArticlesAdapter.ArticleViewHolder>() {
@@ -46,6 +46,12 @@ class ArticlesAdapter(
             }
         }
     }
+
+    fun updateArticles(newList: List<Article>) {
+        articles = newList
+        notifyDataSetChanged()
+    }
+
 
     private  fun showPopUp(view: View?, article: Article) {
         val popup = PopupMenu(view?.context, view)

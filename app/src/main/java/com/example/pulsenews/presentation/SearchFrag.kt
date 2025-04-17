@@ -54,11 +54,26 @@ class SearchFrag : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
+        return binding.root
+    }
 
-        val rootView = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val searchView = rootView.findViewById<SearchView>(R.id.searchView)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        val adapter = ArticlesAdapter(
+            emptyList(),
+            onArticleClicked = { url ->
+                val intent = Intent(requireContext(), ArticleDetailActivity::class.java)
+                intent.putExtra(ArticleDetailActivity.URL_KEY, url)
+                startActivity(intent)
+            },
+            null
+        )
+        binding.rvSearchArticles.adapter = adapter
+
+        // Listen to search query input
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     viewModel.getSearchedArticleList(it)
@@ -67,29 +82,17 @@ class SearchFrag : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                // Clear articles while typing
+                adapter.updateArticles(emptyList())
+                return true
             }
         })
-        // Inflate the layout for this fragment
-        return rootView
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+        // Collect and show search results
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.articles.collect { articles ->
-                    val adapter = ArticlesAdapter(
-                        articles,
-                        onArticleClicked = {url ->
-                            val intent = Intent(requireContext(),ArticleDetailActivity::class.java)
-                            intent.putExtra(ArticleDetailActivity.URL_KEY,url)
-                            startActivity(intent)
-                        },
-                        onArticleLongClicked = null)
-                    binding.rvSearchArticles.adapter = adapter
-
+                    adapter.updateArticles(articles)
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.pulsenews.data
 
+import android.util.Log
 import com.example.pulsenews.BuildConfig
 import com.example.pulsenews.data.local.ArticleDao
 import com.example.pulsenews.data.local.models.ArticleEntity
@@ -31,8 +32,8 @@ class ArticlesRepositoryImpl @Inject constructor(private val newsService: NewsSe
     }
 
     override suspend fun getSearchHeadlines(searchCode:String): NewsResult<List<Article>, DataError.Network> {
-        val response = newsService.getSearchHeadlines(searchCode,apiKey)
-
+        val response = newsService.getSearchHeadlines("",searchCode,apiKey)
+        Log.d("SearchAPIRepoImpl", "result"+response)
         if(response.isSuccessful){
             val articles = response.body()
             return if(articles != null){

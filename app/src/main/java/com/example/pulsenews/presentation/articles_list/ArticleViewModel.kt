@@ -23,7 +23,9 @@ class ArticleViewModel @Inject constructor(private val repository: ArticlesRepos
 
     fun getSearchedArticleList(code:String){
         viewModelScope.launch {
-            when(val result = repository.getSearchHeadlines(code)){
+            val result = repository.getSearchHeadlines(code)
+            Log.d("SearchAPIViewModel", "result"+result)
+            when(result){
                 is NewsResult.Success -> {
                     Log.wtf("ArticleViewModel","getSearchedArticlesList: ${result.data}")
                     _articles.update { result.data }

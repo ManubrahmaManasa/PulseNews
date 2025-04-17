@@ -10,6 +10,9 @@ interface NewsService {
     @GET("top-headlines?country=us")
     suspend fun getHeadlines(@Query("apiKey")apiKey:String):Response<ArticleDTO>
 
-    @GET("everything?")
-    suspend fun getSearchHeadlines(@Query("q")searchCode: String,@Query("apiKey")apiKey: String):Response<ArticleDTO>
+    @GET("top-headlines")
+    suspend fun getSearchHeadlines(
+        @Query("country") country: String = "us",
+        @Query("q")searchCode: String,
+        @Query("apiKey")apiKey: String):Response<ArticleDTO>
 }

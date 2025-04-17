@@ -63,7 +63,7 @@ class FavouritesFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.articles.collect { articles ->
+                viewModel.favourite.collect { articles ->
                     val adapter = ArticlesAdapter(
                         articles,
                         onArticleClicked = {url ->

@@ -1,6 +1,9 @@
 package com.example.pulsenews.di
 
+import com.example.pulsenews.data.ArticlesRepositoryImpl
 import com.example.pulsenews.data.NewsService
+import com.example.pulsenews.data.local.ArticleDao
+import com.example.pulsenews.domain.ArticlesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

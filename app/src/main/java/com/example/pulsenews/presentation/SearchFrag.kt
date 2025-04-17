@@ -91,8 +91,8 @@ class SearchFrag : Fragment() {
         // Collect and show search results
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.articles.collect { articles ->
-                    adapter.updateArticles(articles)
+                viewModel.search.observe(viewLifecycleOwner) { searchArticles ->
+                    adapter.updateArticles(searchArticles)
                 }
             }
         }

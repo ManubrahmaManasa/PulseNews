@@ -52,7 +52,6 @@ class ArticlesAdapter(
         notifyDataSetChanged()
     }
 
-
     private  fun showPopUp(view: View?, article: Article) {
         val popup = PopupMenu(view?.context, view)
         popup.inflate(R.menu.article_popup_menu)
@@ -62,7 +61,6 @@ class ArticlesAdapter(
                     onArticleLongClicked?.let { it1 -> it1(article,R.id.add_to_favourites) }
                     true
                 }
-
                 R.id.remove_from_favourites -> {
                     onArticleLongClicked?.let { it1 -> it1(article, R.id.remove_from_favourites) }
                     true

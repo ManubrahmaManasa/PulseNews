@@ -1,6 +1,8 @@
 package com.example.pulsenews.presentation.articles_list
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pulsenews.domain.ArticlesRepository
@@ -21,14 +23,19 @@ class ArticleViewModel @Inject constructor(private val repository: ArticlesRepos
     private val _articles = MutableStateFlow<List<Article>>(emptyList())
     val articles: StateFlow<List<Article>> = _articles
 
+    private val _favourite = MutableStateFlow<List<Article>>(emptyList())
+    val favourite:StateFlow<List<Article>> = _favourite
+
+    private val _search = MutableLiveData<List<Article>>()
+    val search:LiveData<List<Article>> = _search
+
     fun getSearchedArticleList(code:String){
         viewModelScope.launch {
             val result = repository.getSearchHeadlines(code)
-            Log.d("SearchAPIViewModel", "result"+result)
             when(result){
                 is NewsResult.Success -> {
                     Log.wtf("ArticleViewModel","getSearchedArticlesList: ${result.data}")
-                    _articles.update { result.data }
+                    _search.postValue(result.data)
                 }
                 is NewsResult.Error -> {
                     Log.wtf("ArticleViewModel","getSearchedArticleList:Network error")
@@ -58,10 +65,10 @@ class ArticleViewModel @Inject constructor(private val repository: ArticlesRepos
             withContext(Dispatchers.Main){
                 when(result){
                     is NewsResult.Success -> {
-                        _articles.update { result.data }
+                        _favourite.update { result.data }
                     }
                     is NewsResult.Error -> {
-                        _articles.update { emptyList() }
+                        _favourite.update { emptyList() }
                     }
                 }
             }
@@ -77,12 +84,14 @@ class ArticleViewModel @Inject constructor(private val repository: ArticlesRepos
     fun removeArticle(article: Article){
         viewModelScope.launch(Dispatchers.IO) {
             repository.removeFromFavourites(article)
+            getArticleFromDB()
         }
     }
 
     fun clearAll(){
         viewModelScope.launch(Dispatchers.IO) {
             repository.clearAll()
+            getArticleFromDB()
         }
     }
 }

@@ -1,6 +1,11 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -17,10 +22,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 
     buildTypes {
+
+        val apiKey: String = gradleLocalProperties(rootDir,providers).getProperty("API_KEY")
+
+        debug {
+            buildConfigField("String","API_KEY",apiKey)
+        }
+
         release {
+            buildConfigField("String","API_KEY",apiKey)
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -49,4 +65,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.glide)
+    implementation(libs.gson)
+    implementation(libs.retrofit)
+    implementation(libs.gson.converter)
+
+    implementation(libs.hilt.android.v2511)
+    kapt(libs.hilt.android.compiler)
+
+    //room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 }
